@@ -1,3 +1,15 @@
+### 使用Pyhton来实现Huufman
+
+本code主要是用于学习huffman的精华，于是从github上clone下来研究的。
+由于写的通俗易懂且简洁于是选择了此代码。
+如果说真有什么贡献就是给整个代码加上了中文注解。
+也算是尝试使用git来进行版本迭代管理。
+
+使用方法：用python跑`useHuffman.py`,path理论上为`sample.txt`
+
+虽然是很初阶的程式码，但正因为很初阶，所以作为python练手代码刚刚好。
+
+
 ### Python Implementaion of Huffman Coding
 
 Explanation on YouTube video https://youtu.be/JCOph23TQTY.

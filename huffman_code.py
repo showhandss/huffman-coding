@@ -3,7 +3,7 @@ import os
 
 
 class HuffmanCoding:
-	# 宣告地址，栈，字典以及顺序图谱
+	# 宣告地址，栈，字典以及
 	def __init__(self, path):
 		self.path = path
 		self.heap = []
@@ -68,7 +68,6 @@ class HuffmanCoding:
 		if(root.char != None):
 			self.codes[root.char] = current_code
 			self.reverse_mapping[current_code] = root.char
-			#print(current_code,":",root.char)
 			return
 
 		# 先左再右，左0右1
@@ -89,6 +88,28 @@ class HuffmanCoding:
 			encoded_text += self.codes[character]	
 		return encoded_text
 
+	# # 先给encoded_text凑成8的倍数长度，然后将最后剩余的长度转为二进制存在encoded_text最前面
+	# def pad_encoded_text(self, encoded_text):
+	# 	extra_padding = 8 - len(encoded_text) % 8
+	# 	for i in range(extra_padding):
+	# 		encoded_text += "0"
+
+	# 	padded_info = "{0:08b}".format(extra_padding)
+	# 	encoded_text = padded_info + encoded_text
+	# 	return encoded_text
+
+	# 将原本二进制文本8个8个转为数字存入bytearray
+	# def get_byte_array(self, padded_encoded_text):
+	# 	if(len(padded_encoded_text) % 8 != 0):
+	# 		print("Encoded text not padded properly")
+	# 		exit(0)
+
+	# 	b = bytearray()
+	# 	for i in range(0, len(padded_encoded_text), 8):
+	# 		byte = padded_encoded_text[i:i+8]
+	# 		b.append(int(byte, 2))
+	# 	return b
+
 	# 压缩
 	def compress(self):
 		filename, file_extension = os.path.splitext(self.path)
@@ -100,6 +121,7 @@ class HuffmanCoding:
 			text = file.read()
 			#结尾清洁
 			text = text.rstrip()
+			print(text)
 
 			frequency = self.make_frequency_dict(text)
 			self.make_heap(frequency)
@@ -107,15 +129,49 @@ class HuffmanCoding:
 			self.make_codes()
 
 			encoded_text = self.get_encoded_text(text)
+			#padded_encoded_text = self.pad_encoded_text(encoded_text)
+
+			#b = self.get_byte_array(padded_encoded_text)
 			output.write(encoded_text)
 
+		# 导入与导出
+		# with open(self.path, 'r+') as file, open(output_path, 'wb') as output:
+		# 	#文本读取
+		# 	text = file.read()
+		# 	#结尾清洁
+		# 	text = text.rstrip()
+
+		# 	frequency = self.make_frequency_dict(text)
+		# 	self.make_heap(frequency)
+		# 	self.merge_nodes()
+		# 	self.make_codes()
+
+		# 	encoded_text = self.get_encoded_text(text)
+		# 	padded_encoded_text = self.pad_encoded_text(encoded_text)
+
+		# 	b = self.get_byte_array(padded_encoded_text)
+		# 	output.write(bytes(b))
 
 		print("Compressed")
-		print("压缩在",output_path)
+		# return output_path
 		return
 
 
 	""" 解码程序: """
+
+
+	# 还原源码
+	# def remove_padding(self, padded_encoded_text):
+	# 	# 提取前8个字符
+	# 	padded_info = padded_encoded_text[:8]
+	# 	extra_padding = int(padded_info, 2)
+		
+	# 	# 提取8以后的字符
+	# 	padded_encoded_text = padded_encoded_text[8:] 
+	# 	# 去除后加的字符
+	# 	encoded_text = padded_encoded_text[:-1*extra_padding]
+
+	# 	return encoded_text
 
 	# 解码
 	def decode_text(self, encoded_text):
@@ -138,12 +194,20 @@ class HuffmanCoding:
 		output_path = filename + "_decompressed" + ".txt"
 
 		with open(output_path, 'w') as output:
+			
+			# byte = file.read(1)
+			# while(len(byte) > 0):
+			# 	byte = ord(byte)
+			# 	bits = bin(byte)[2:].rjust(8, '0')
+			# 	bit_string += bits
+			# 	byte = file.read(1)
+
+			#encoded_text = self.remove_padding(bit_string)
 
 			decompressed_text = self.decode_text(encoded_text)
 			
 			output.write(decompressed_text)
 
 		print("Decompressed")
-		print(decompressed_text,"已解压在",output_path)
 		return output_path
 
